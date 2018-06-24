@@ -112,6 +112,10 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   if allowed(url, nil)  then
     html = read_file(file)
 
+    if html == '{"error":"site not found"}' then
+      return
+    end
+
     if string.match(url, "^https?://[^%.]+%.ytmnd%.com/info/[0-9]+/json$") then
       local domain_start = string.lower(string.match(html, '"domain"%s*:%s*"([^"]+)"'))
       ids[domain_start] = true
